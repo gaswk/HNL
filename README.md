@@ -1,7 +1,7 @@
 # HNL
 
 Here is an example of HNL (long lived particle) production for CLD full simulation and reconstruction.
-## Generarte HNL
+## Generate HNL
  One needs first to generated HNL events in the hepmc3 format (so including hadronisation). HNL lhe files can be produced with madgraph, following same production as for the FCC HNL analysis in [arXiv:2203.05502v4](https://arxiv.org/pdf/2203.05502.pdf). The madgraph parameters can be found at [MG Card](https://github.com/FCC-LLP/FCCAnalyses/blob/master/examples/FCCee/bsm/LLPs/DisplacedHNL/HNL_sample_creation/mg5_proc_card_HNL_Majorana_eenu_50GeV_1p41e-6Ve.dat). 
 
 The madgraph HNL model can be found at the link below. The tgz file has to be unziped within the "models" directory of madgraph. 
