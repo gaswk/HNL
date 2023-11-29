@@ -17,9 +17,9 @@ bin/mg5_aMC mg5_proc_card_HNL_Majorana_eenu_50GeV_1p41e-6Ve.dat
 
  Then run pythia standalone to produce HEPMC3 file.The hepmc file has to be reached by condor, so it has to be either on AFS or EOS.
 
-￼￼**Simulation of displaced vertex require status code 2 for the HNL, while it is status 22 out of pythia**, [script to change the status in HEPMC3](https://github.com/gaswk/HNL/blob/main/hep_status22_to_2.py), example of usage:
+**Simulation of displaced vertex require status code 2 for the HNL, while it is status 22 out of pythia**, [script to change the status in HEPMC3](https://github.com/gaswk/HNL/blob/main/hep_status22_to_2.py), example of usage:
 ```
-Python hep_status22_to_2.py input.hepmc output.hepmc
+python hep_status22_to_2.py input.hepmc output.hepmc
 ```
 
 ## Simulation and Reconstruction with CLD FullSim
