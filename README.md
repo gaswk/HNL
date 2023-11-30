@@ -6,7 +6,7 @@ Here is an example of HNL (long lived particle) production for CLD full simulati
 
 The madgraph HNL model can be found at the link below. The tgz file has to be unziped within the "models" directory of madgraph. 
 
-HNL MG5 model
+[HNL MG5 model](https://feynrules.irmp.ucl.ac.be/raw-attachment/wiki/HeavyN/SM_HeavyN_CKM_AllMasses_LO.tgz)
  
 Generations can be simply be done with the following command :
  
@@ -45,4 +45,11 @@ python condorJobs_recoHNL.py -Nevts_tot="50000" -Nevts_per_job="1000" \
         -output_edm4hep="/eos/user/g/gasadows/Output/HNL/REC" \
         -inputFiles="/eos/user/g/gasadows/Output/HNL/"
 ```
-You may want to use the [steering file](https://github.com/gaswk/HNL/blob/main/CLDReconstruction_dect.py)that you need to copy inside your ```CLDConfig/CLDConfig``` directory or you can use the one [CLDConfig](https://github.com/key4hep/CLDConfig/blob/main/CLDConfig/CLDReconstruction.py) but you have the change the detector model manually in the file.
+
+Sometimes events or outputs are missing, to check that all events have been simulated and reconstructed run the following checks:
+```
+python checkSim_HNL.py outputSim_edm4hep.root expected_n_files expected_n_evts
+```
+```
+python checkRec_HNL.py outputSim_edm4hep.root expected_n_files expected_n_evts
+```

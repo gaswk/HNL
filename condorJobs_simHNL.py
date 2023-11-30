@@ -15,21 +15,22 @@ parser.add_argument("-inputFiles", help="input file path ", required=True)
 args = parser.parse_args()
 
 DetectorModelList_ = ["FCCee_o1_v04"]
-os.system("mkdir "+args.output_sim+"/"+args.Sample+"/")
+output_dir = args.output_sim+"/"+args.Sample+"/"
+os.system("mkdir "+ output_dir)
 #setup = "/cvmfs/sw.hsf.org/key4hep/setup.sh"
 setup = "/cvmfs/sw-nightlies.hsf.org/key4hep/setup.sh"
 
 
-N_jobs = int( int(args.Nevts_tot)/int(args.Nevts_per_job)) +1
+N_jobs = int( int(args.Nevts_tot)/int(args.Nevts_per_job))
 
-print( N_jobs)
+print("N_jobs = ", N_jobs)
 
 directory_sample = "ProdJobs_"+args.Sample
 os.system("mkdir "+directory_sample)
    
 
 skip_events = 0
-for ijob in range(N_jobs-1):
+for ijob in range(N_jobs):
 
    directory_job = directory_sample+"/Jobs_"+str(ijob)
    os.system("mkdir "+directory_job)
@@ -44,12 +45,13 @@ for ijob in range(N_jobs-1):
             skip_events = 0
       else :
             skip_events = skip_events+int(args.Nevts_per_job)
-      print(skip_events)
-      outputfileName = args.Sample+"_"+str(ijob)+"_evts_edm4hep.root"
-      arguments = f" --compactFile $K4GEO/FCCee/CLD/compact/{DetectorModelList_}/{DetectorModelList_}.xml --inputFiles " + inputFiles_ + " --numberOfEvents " + args.Nevts_per_job + " --skipNEvents " + str(skip_events) + " --steeringFile cld_steer.py " + " --outputFile  " + outputfileName
-      command = "ddsim " + arguments
+      print("start at event: ", skip_events)
+      outputfileName = args.Sample + "_" + str(ijob) + "_evts_edm4hep.root"
+      #outputfileName = args.Sample + "_" + str(ijob) + "_evts.slcio"
+      arguments = f" --compactFile $K4GEO/FCCee/CLD/compact/{DetectorModelList_[0]}/{DetectorModelList_[0]}.xml --inputFiles " + args.inputFiles + " --numberOfEvents " + args.Nevts_per_job + " --skipNEvents " + str(skip_events) + " --steeringFile cld_steer.py " + " --outputFile  " + outputfileName
+      command = "ddsim " + arguments + " > /dev/null"
       file.write(command+"\n")
-      file.write("cp "+ outputfileName + "  " + args.output_sim+"/"+args.Sample+"/." +"\n")
+      file.write("cp "+ outputfileName + "  " + output_dir +"\n")
       file.close()
 	
    condor_file = directory_job + "/condor_script.sub"

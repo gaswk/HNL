@@ -16,31 +16,21 @@ parser.add_argument("-inputFiles", help="input file path ", required=True)
 args = parser.parse_args()
 
 DetectorModelList_ = ["FCCee_o1_v04"]
-SteeringFile = "/afs/cern.ch/user/g/gasadows/CLDConfig/CLDConfig/CLDReconstruction_dect.py"
 Config_Value_Path = "/afs/cern.ch/user/g/gasadows/CLDConfig/CLDConfig/"
-os.system("mkdir "+args.output_edm4hep+"_"+args.Sample+"_RECO_EDM4Hep/")
+output_dir = args.output_edm4hep+"_"+args.Sample+"_REC/"
+os.system("mkdir "+output_dir)
 #setup = "/cvmfs/sw.hsf.org/key4hep/setup.sh"
 setup = "/cvmfs/sw-nightlies.hsf.org/key4hep/setup.sh"
 
-N_jobs = int( int(args.Nevts_tot)/int(args.Nevts_per_job)) +1
+N_jobs = int( int(args.Nevts_tot)/int(args.Nevts_per_job)) 
 
-print( N_jobs)
+print("N_jobs = ", N_jobs)
 
-directory_sample = "ProdJobs_"+args.Sample+"_RECO_EDM4Hep"
+directory_sample = "ProdJobs_"+args.Sample+"_REC"
 os.system("mkdir "+directory_sample)
-   
-    # Create the content for config_values.py
-            config_content = f'''
-DetectorModel = "{DetectorModelPath}"
-    '''
-            print(config_content)
-
-            # Write the content to config_values.py and overwrite the file if it already exists
-            with open(f"{Config_Value_Path}config_values.py", "w") as file:
-                file.write(config_content)   
 
 skip_events = 0
-for ijob in range(N_jobs-1):
+for ijob in range(N_jobs):
 
    directory_job = directory_sample+"/Jobs_"+str(ijob)
    os.system("mkdir "+directory_job)
@@ -52,10 +42,10 @@ for ijob in range(N_jobs-1):
       file.write("git clone https://github.com/key4hep/CLDConfig.git"+"\n")
       file.write("cd CLDConfig/CLDConfig/"+"\n")
       outputfileName = "HNL_50_"+str(ijob)+"_REC_EDM4Hep.root"
-      arguments = " --inputFiles " + args.inputFiles +"/"+args.Sample+"/"+args.Sample+"_"+str(ijob)+"_evts_edm4hep.root --filename.PodioOutput  " + outputfileName+ " -n " + args.Nevts_per_job
-      command = f"k4run {SteeringFile} " + arguments
+      arguments = f" --GeoSvc.detectors=$K4GEO/FCCee/CLD/compact/{DetectorModelList_[0]}/{DetectorModelList_[0]}.xml --inputFiles " + args.inputFiles +"/"+args.Sample+"/"+args.Sample+"_"+str(ijob)+"_evts_edm4hep.root --filename.PodioOutput  " + outputfileName+ " -n " + args.Nevts_per_job
+      command = "k4run CLDReconstruction.py " + arguments + " > /dev/null"
       file.write(command+"\n")
-      file.write("cp "+ outputfileName + "  " + args.output_edm4hep+"_"+args.Sample+"_RECO_edm4hep"+"/."+"\n")
+      file.write("cp "+ outputfileName + "  " + output_dir +"\n")
       file.close()
 	
    condor_file = directory_job + "/condor_script.sub"
