@@ -10,11 +10,13 @@ class Colors:
     ENDC = '\033[0m'      # End formatting
 
 def check_events(root_file, expected_num_events):
+    warnings_or_fail = False  # Initialize with a default value
+
     tree = root_file.Get("events")
 
     if not tree:
         print(f"Error: Unable to find TTree named 'events' in {root_file.GetName()}")
-        return
+        return warnings_or_fail
 
     # Get the number of events
     num_events = tree.GetEntries()
@@ -25,6 +27,9 @@ def check_events(root_file, expected_num_events):
 
     if warnings_or_fail:
         print()  # Add a new line before the next file
+
+    return warnings_or_fail
+
 
 def check_files_in_directory(directory, expected_num_files, expected_num_events):
     file_list = [os.path.join(directory, file) for file in os.listdir(directory) if file.endswith('.root')]

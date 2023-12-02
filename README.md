@@ -31,7 +31,7 @@ git clone https://github.com/key4hep/CLDConfig.git
 
 The simulation can be launch from the script:
 ```
-python condorJobs_simHNL.py -Nevts_tot="50000" -Nevts_per_job="1000" \
+python ProdSim4Physics.pyy -Nevts_tot="50000" -Nevts_per_job="1000" \
         -Sample="HNL_Majorana_eenu_50GeV_1p41e-6Ve" \
         -output_sclio="Output/HNL/" \
         -inputFiles="HNL_Majorana_eenu_90GeV_1p41e-6Ve.hepmc"
@@ -40,7 +40,7 @@ python condorJobs_simHNL.py -Nevts_tot="50000" -Nevts_per_job="1000" \
 
 Once the simulation is produced, the reconstruction is done with the script, notes that ```Nevts_tot```, ```Nevts_per_job``` and ```Sample``` **should be the same as for the simulation**
 ```
-python condorJobs_recoHNL.py -Nevts_tot="50000" -Nevts_per_job="1000" \
+python ProdRec4Physics.py -Nevts_tot="50000" -Nevts_per_job="1000" \
         -Sample="HNL_Majorana_eenu_50GeV_1p41e-6Ve" \
         -output_edm4hep="/eos/user/g/gasadows/Output/HNL/REC" \
         -inputFiles="/eos/user/g/gasadows/Output/HNL/"
@@ -53,3 +53,4 @@ python checkSim_HNL.py outputSim_edm4hep.root expected_n_files expected_n_evts
 ```
 python checkRec_HNL.py outputSim_edm4hep.root expected_n_files expected_n_evts
 ```
+If some events are missing run again the simulation/reconstruction processes, it will run only the proceses with missing events.
