@@ -32,9 +32,6 @@ os.system("mkdir "+directory_sample)
 
 skip_events = 0
 for ijob in range(N_jobs):
-
-   inputFile = args.inputFiles +"/"+args.Sample+"/"+args.Sample+"_"+str(ijob)+"_evts_edm4hep.root"
-
    directory_job = directory_sample+"/Jobs_"+str(ijob)
    os.system("mkdir "+directory_job)
    print("creating job "+str(ijob)+ " in directory " +directory_job)
@@ -42,20 +39,22 @@ for ijob in range(N_jobs):
 
    # Check if the input file exists
    inputFile = args.inputFiles + "/" + args.Sample + "/" + args.Sample + "_" + str(ijob) + "_evts_edm4hep.root"
+   #inputFile = args.inputFiles + "/" + args.Sample + "/" + args.Sample + "_" + str(ijob) + "_evts.slcio"
    if not os.path.exists(inputFile):
      print(f"Error: Input file {inputFile} does not exist. Skipping job.")
      continue 
 
    # Check if the output file already exists and has correct Nb of events
-    if os.path.exists(output_file):
-        root_file = ROOT.TFile(output_file, "READ")
-        events_tree = root_file.Get("events")
-        if events_tree:
-            if events_tree.GetEntries() == int(args.Nevts_per_job):
-                print(f"Output file {output_file} already exists and has correct Nb of events. Skipping job.")
-                root_file.Close()
-                continue
-        root_file.Close()
+   output_file = output_dir +"/"+ outputfileName
+   if os.path.exists(output_file):
+      root_file = ROOT.TFile(output_file, "READ")
+      events_tree = root_file.Get("events")
+      if events_tree:
+          if events_tree.GetEntries() == int(args.Nevts_per_job):
+              print(f"Output file {output_file} already exists and has correct Nb of events. Skipping job.")
+              root_file.Close()
+              continue
+      root_file.Close()
 
    bash_file = directory_job + "/bash_script.sh"
    with open(bash_file, "w") as file:
