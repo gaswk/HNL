@@ -18,9 +18,9 @@ def draw_histograms(canvas, histograms, hist_title, x_axis_title, y_axis_title, 
     canvas.Clear()
 
     # Create a legend
-    legend = ROOT.TLegend(0.42, 0.73, 1.6, 0.60)
+    legend = ROOT.TLegend(0.37, 0.73, 1.6, 0.60)
     legend.SetTextFont(62)
-    legend.SetTextSize(0.03)
+    legend.SetTextSize(0.035)
     legend.SetFillStyle(0)
     legend.SetBorderSize(0)
     legend.SetMargin(0.1)
@@ -77,30 +77,30 @@ def draw_histograms(canvas, histograms, hist_title, x_axis_title, y_axis_title, 
     latex_left.DrawLatexNDC(text_left_x, text_left_y, "FCC-ee CLD Full Simulation")
 
     # Add text as title header
-    text_legend_x = 0.415
+    text_legend_x = 0.365
     text_legend_y = 0.73
     latex_legend = ROOT.TLatex()
     latex_legend.SetNDC()
     latex_legend.SetTextFont(42)
-    latex_legend.SetTextSize(0.02)
+    latex_legend.SetTextSize(0.025)
     latex_legend.DrawLatexNDC(text_legend_x, text_legend_y, "No selection")
 
     # Add text on center1
-    text_center1_x = 0.415
-    text_center1_y = 0.84
+    text_center1_x = 0.365
+    text_center1_y = 0.82
     latex_center1 = ROOT.TLatex()
     latex_center1.SetNDC()
     latex_center1.SetTextFont(42)
-    latex_center1.SetTextSize(0.03)
+    latex_center1.SetTextSize(0.035)
     latex_center1.DrawLatexNDC(text_center1_x, text_center1_y, "#sqrt{s} = 91 GeV")
 
     # Add text on center2
-    text_center2_x = 0.415
-    text_center2_y = 0.79
+    text_center2_x = 0.365
+    text_center2_y = 0.77
     latex_center2 = ROOT.TLatex()
     latex_center2.SetNDC()
     latex_center2.SetTextFont(42)
-    latex_center2.SetTextSize(0.03)
+    latex_center2.SetTextSize(0.035)
     latex_center2.DrawLatexNDC(text_center2_x, text_center2_y, "e^{+}e^{-} #rightarrow N #nu, N #rightarrow ee#nu")
 
     canvas.Write(f"{hist_title}")
@@ -108,10 +108,10 @@ def draw_histograms(canvas, histograms, hist_title, x_axis_title, y_axis_title, 
     #___________________________________________________________________________________________
 # Open the input ROOT files
 input_files = [
-    ROOT.TFile("/afs/cern.ch/user/g/gasadows/FCCAnalyses/tutorial/REC_HNL_Majorana_eenu_30GeV_1p41e-6Ve.root", "READ"),
-    ROOT.TFile("/afs/cern.ch/user/g/gasadows/FCCAnalyses/tutorial/REC_HNL_Majorana_eenu_50GeV_1p41e-6Ve.root", "READ"),
-    ROOT.TFile("/afs/cern.ch/user/g/gasadows/FCCAnalyses/tutorial/REC_HNL_Majorana_eenu_70GeV_1p41e-6Ve.root", "READ"),
-    ROOT.TFile("/afs/cern.ch/user/g/gasadows/FCCAnalyses/tutorial/REC_HNL_Majorana_eenu_90GeV_1p41e-6Ve.root", "READ"),
+    ROOT.TFile("/afs/cern.ch/user/g/gasadows/HNL/analysis/REC_HNL_Majorana_eenu_30GeV_1p41e-6Ve.root", "READ"),
+    ROOT.TFile("/afs/cern.ch/user/g/gasadows/HNL/analysis/REC_HNL_Majorana_eenu_50GeV_1p41e-6Ve.root", "READ"),
+    ROOT.TFile("/afs/cern.ch/user/g/gasadows/HNL/analysis/REC_HNL_Majorana_eenu_70GeV_1p41e-6Ve.root", "READ"),
+    ROOT.TFile("/afs/cern.ch/user/g/gasadows/HNL/analysis/REC_HNL_Majorana_eenu_90GeV_1p41e-6Ve.root", "READ"),
 ]
 
 # Get the histograms for each variable
@@ -125,6 +125,9 @@ hist_MC_HNL_p = [file.Get("MC_HNL_p") for file in input_files]
 hist_MC_HNL_mass = [file.Get("MC_HNL_mass") for file in input_files]
 hist_MC_HNL_theta = [file.Get("MC_HNL_theta") for file in input_files]
 hist_MC_invmass = [file.Get("FSGen_ee_invMass") for file in input_files]
+hist_CutFlow = [file.Get("cutFlow") for file in input_files]
+hist_MissingET = [file.Get("missingEnergy_pt") for file in input_files]
+hist_vertex_pull_x = [file.Get("Vertex_diff_x") for file in input_files]
 
 # Create output file root and pdf
 output_file_name = "combined_all_HNL"
@@ -152,11 +155,17 @@ draw_histograms(output_file_pdf, hist_MC_invmass, "MCelectrons_InvMass", "Gen m_
 output_file_pdf.Clear()
 draw_histograms(output_file_pdf, hist_invmass, "electrons_InvMass", "Reco m_{ee} [GeV]", "Events / 1.0 GeV", log_scale=True, y_range=(0.001, 2900))
 output_file_pdf.Clear()
-draw_histograms(output_file_pdf, hist_GenVertex, "Gen_vertex_displacement", "Gen N L_{xyz} [cm]", "Events / 1.0 cm", log_scale=True, y_range=(0.001, 2900))
+draw_histograms(output_file_pdf, hist_MissingET, "Missing ET", "Reco Missing ET p_{T} [GeV]", "Events / 0.6 GeV", log_scale=True, y_range=(0.001, 1.05))
 output_file_pdf.Clear()
-draw_histograms(output_file_pdf, hist_RecVertex, "Rec_vertex_displacement", "Reco N L_{xyz} [cm]", "Events / 1.0 cm", log_scale=True, y_range=(0.001, 2900))
+draw_histograms(output_file_pdf, hist_GenVertex, "Gen_vertex_displacement", "Gen N L_{xyz} [mm]", "Events / 10 mm", log_scale=True, y_range=(0.001, 2900))
 output_file_pdf.Clear()
-draw_histograms(output_file_pdf, hist_d0, "track_d0", "d0 [cm]", "Events / 0.5 cm", log_scale=False, y_range=(0.001, 0.85))
+draw_histograms(output_file_pdf, hist_RecVertex, "Rec_vertex_displacement", "Reco N L_{xyz} [mm]", "Events / 10 mm", log_scale=True, y_range=(0.001, 2900))
+output_file_pdf.Clear()
+draw_histograms(output_file_pdf, hist_d0, "track_d0", "d0 [mm]", "Events / 5 mm", log_scale=False, y_range=(0.001, 0.85))
+output_file_pdf.Clear()
+draw_histograms(output_file_pdf, hist_CutFlow, "cutFlow", "#cut", "#Events", log_scale=False, y_range=(0.001, 1.05))
+output_file_pdf.Clear()
+draw_histograms(output_file_pdf, hist_vertex_pull_x, "vertex_pull_x", "vertex pull x [mm]", "Events / 2.10^{-3} mm", log_scale=False, y_range=(0.001, 0.305))
 output_file_pdf.Clear()
 
 # Close files

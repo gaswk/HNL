@@ -36,7 +36,7 @@ def combine_Hist_normalised(canvas, blue_hist, red_hist, input_file, legend_titl
     red_hist.DrawNormalized("same")
     red_hist.SetStats(0)  # Disable statistics box 
 
-    legend = ROOT.TLegend(0.6, 0.7, 0.9, 0.9)
+    legend = ROOT.TLegend(0.45, 0.7, 0.9, 0.9)
     legend.SetTextFont(62)
     legend.SetTextSize(0.03)
     legend.SetMargin(0.1)
@@ -57,7 +57,7 @@ def combine_Hist_normalised(canvas, blue_hist, red_hist, input_file, legend_titl
 
 #_____________________________________________________________________________
 # Open the input ROOT file
-input_file = ROOT.TFile("/afs/cern.ch/user/g/gasadows/FCCAnalyses/tutorial/HNL_50_merged_REC_EDM4Hep.root", "READ")
+input_file = ROOT.TFile("/afs/cern.ch/user/g/gasadows/HNL/analysis/REC_HNL_Majorana_eenu_70GeV_1p41e-6Ve.root", "READ")
 
 # Get the histograms you want to superimpose
 hist1_blue = input_file.Get("MC_electrons_pt")
@@ -81,12 +81,12 @@ output_file_pdf.Print(f"{output_file_name}.pdf[")
 # Superimpose and save histograms with legends
 combine_Hist(canvas, hist1_blue, hist1_red, input_file, "electrons p_{T}", "p_{T} [GeV]")
 combine_Hist(canvas, hist2_blue, hist2_red, input_file, "electrons theta", "#theta [rad]")
-combine_Hist(canvas, hist3_blue, hist3_red, input_file, "Vertex displacement", "Displacement [cm]")
+combine_Hist(canvas, hist3_blue, hist3_red, input_file, "Vertex displacement", "Displacement [mm]")
 
 # Superimpose and save histograms with legends Normalised
 combine_Hist_normalised(canvas, hist1_blue, hist1_red, input_file, "electrons p_{T}", "p_{T} [GeV]")
 combine_Hist_normalised(canvas, hist2_blue, hist2_red, input_file, "electrons theta", "#theta [rad]")
-combine_Hist_normalised(canvas, hist3_blue, hist3_red, input_file, "Vertex displacement", "Displacement [cm]")
+combine_Hist_normalised(canvas, hist3_blue, hist3_red, input_file, "Vertex displacement", "Displacement [mm]")
 
 # Close files
 input_file.Close()

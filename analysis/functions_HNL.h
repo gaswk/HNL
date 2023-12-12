@@ -276,6 +276,36 @@ float gen_vertex_r(ROOT::VecOps::RVec<edm4hep::MCParticleData> genpart){
     return (std::sqrt( genpart[0].vertex.x*genpart[0].vertex.x + genpart[0].vertex.y*genpart[0].vertex.y  ));
 }
 
+float Vertex_diff_Lxyz(ROOT::VecOps::RVec<edm4hep::MCParticleData> genpart, edm4hep::VertexData vertices){
+    return (std::sqrt( 
+        
+        pow(genpart[0].vertex.x - vertices.position.x , 2)+
+        pow(genpart[0].vertex.y - vertices.position.y , 2)+
+        pow(genpart[0].vertex.z - vertices.position.z , 2))
+        );
+}
+
+float Vertex_diff_r(ROOT::VecOps::RVec<edm4hep::MCParticleData> genpart, edm4hep::VertexData vertices){
+    return (std::sqrt( 
+        
+        pow(genpart[0].vertex.x - vertices.position.x , 2)+
+        pow(genpart[0].vertex.y - vertices.position.y , 2))
+        );
+}
+
+float Vertex_diff_x(ROOT::VecOps::RVec<edm4hep::MCParticleData> genpart, edm4hep::VertexData vertices){
+    return (genpart[0].vertex.x - vertices.position.x );
+}
+
+float Vertex_diff_y(ROOT::VecOps::RVec<edm4hep::MCParticleData> genpart, edm4hep::VertexData vertices){
+    return (genpart[0].vertex.y - vertices.position.y );
+}
+
+float Vertex_diff_z(ROOT::VecOps::RVec<edm4hep::MCParticleData> genpart, edm4hep::VertexData vertices){
+    return (genpart[0].vertex.z - vertices.position.z );
+}
+
+
 
 ROOT::VecOps::RVec<float> gen_vertex_Lxyz(ROOT::VecOps::RVec<edm4hep::MCParticleData> in){
   ROOT::VecOps::RVec<float> result;

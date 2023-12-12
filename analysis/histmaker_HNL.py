@@ -60,11 +60,16 @@ bins_invmass= (100, 0, 100)
 bins_missingPT= (100, 0, 60)
 bins_vertex_r= (100, 0, 100)
 bins_vertex_z= (100, 0, 100)
-bins_vertex_dist= (100, 0, 100)
+bins_vertex_dist= (100, 0, 1000)
 bins_track_d0= (80, -20, 20)
 
 bins_vertex_x_all= (100, 0, 70)
-bins_vertex_Lxyz_all= (100, 0, 100)
+bins_vertex_Lxyz_all= (100, 0, 1000)
+
+bins_2D = (100, 0, 100, 100, 0, 100)
+
+bins_pull_r = (100, 0, 0.3)
+bins_pull = (100, -0.1, 0.1)
 
 # build_graph function that contains the analysis logic, cuts and histograms (mandatory)
 def build_graph(df, dataset):
@@ -259,8 +264,22 @@ def build_graph(df, dataset):
     #results.append(df.Histo1D(("Vertex_r", "",    *bins_vertex_r),    "Vertex_r")) 
     #results.append(df.Histo1D(("Vertex_z", "",    *bins_vertex_z),    "Vertex_z")) 
     results.append(df.Histo1D(("Vertex_dist", "", *bins_vertex_dist), "Vertex_dist")) 
-    
 
+    results.append(df.Histo2D(("2D_gen_vs_rec_Lxyz", "", *bins_2D), "gen_vertex_Lxyz", "Vertex_dist"))
+
+    df = df.Define("Vertex_diff_Lxyz", "FCCAnalyses::HNLfunctions::Vertex_diff_Lxyz(MC_electrons_status23, Vertex)")
+    df = df.Define("Vertex_diff_r", "FCCAnalyses::HNLfunctions::Vertex_diff_r(MC_electrons_status23, Vertex)")
+    df = df.Define("Vertex_diff_x", "FCCAnalyses::HNLfunctions::Vertex_diff_x(MC_electrons_status23, Vertex)")
+    df = df.Define("Vertex_diff_y", "FCCAnalyses::HNLfunctions::Vertex_diff_y(MC_electrons_status23, Vertex)")
+    df = df.Define("Vertex_diff_z", "FCCAnalyses::HNLfunctions::Vertex_diff_z(MC_electrons_status23, Vertex)")
+
+
+    results.append(df.Histo1D(("Vertex_diff_Lxyz", "", *bins_pull_r), "Vertex_diff_Lxyz")) 
+    results.append(df.Histo1D(("Vertex_diff_r", "", *bins_pull_r), "Vertex_diff_r")) 
+    results.append(df.Histo1D(("Vertex_diff_x", "", *bins_pull), "Vertex_diff_x")) 
+    results.append(df.Histo1D(("Vertex_diff_y", "", *bins_pull), "Vertex_diff_y")) 
+    results.append(df.Histo1D(("Vertex_diff_z", "", *bins_pull), "Vertex_diff_z")) 
+    
 
     #test primary vertex reconstruction with no constrains.
     
