@@ -1,6 +1,6 @@
 # list of processes (mandatory)
 processList = {
-    #'REC_HNL_Majorana_eenu_90GeV_1e-5Ve' : {'fraction':1, 'crossSection': 2.29*10**(-8)}, # m_HNL 50 GeV, V_eN 1 × 10−5
+    #'REC_HNL_Majorana_eenu_50GeV_1e-5Ve' : {'fraction':1, 'crossSection': 2.29*10**(-8)}, # m_HNL 50 GeV, V_eN 1 × 10−5
     'REC_HNL_Majorana_eenu_30GeV_1p41e-6Ve' : {'fraction':1, 'crossSection': 6.637*10**(-10)},  # m_HNL 30 GeV, V_eN 1.41 × 10−6
     'REC_HNL_Majorana_eenu_50GeV_1p41e-6Ve' : {'fraction':1, 'crossSection': 4.535*10**(-10)},  # m_HNL 50 GeV, V_eN 1.41 × 10−6
     'REC_HNL_Majorana_eenu_70GeV_1p41e-6Ve' : {'fraction':1, 'crossSection': 1.968*10**(-10)},  # m_HNL 70 GeV, V_eN 1.41 × 10−6

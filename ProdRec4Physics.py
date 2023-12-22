@@ -17,7 +17,6 @@ parser.add_argument("-inputFiles", help="input file path ", required=True)
 args = parser.parse_args()
 
 DetectorModelList_ = ["FCCee_o1_v04"]
-Config_Value_Path = "/afs/cern.ch/user/g/gasadows/CLDConfig/CLDConfig/"
 output_dir = args.output_edm4hep+"_"+args.Sample
 output_dir_aida = args.output_edm4hep+"_"+args.Sample+"/aida_outputs"
 os.system("mkdir "+output_dir)

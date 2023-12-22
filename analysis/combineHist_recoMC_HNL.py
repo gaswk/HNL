@@ -17,7 +17,7 @@ def combine_Hist(canvas, blue_hist, red_hist, input_file, legend_title, x_axis_t
     legend.SetBorderSize(0)
     legend.SetMargin(0.1)    # distance between marker and text
     legend.SetHeader(legend_title)
-    legend.AddEntry(blue_hist, "MC", "l")
+    legend.AddEntry(blue_hist, "Gen", "l")
     legend.AddEntry(red_hist, "Reco", "l")
     legend.Draw()
 
@@ -44,7 +44,7 @@ def combine_Hist_normalised(canvas, blue_hist, red_hist, input_file, legend_titl
     legend.SetBorderSize(0)
     legend.SetHeader(legend_title)
     legend.SetHeader(f"{legend_title} Normalised")
-    legend.AddEntry(blue_hist, "MC", "l")
+    legend.AddEntry(blue_hist, "Gen", "l")
     legend.AddEntry(red_hist, "Reco", "l")
     legend.Draw()
 
