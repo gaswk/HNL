@@ -24,33 +24,22 @@ python hep_status22_to_2.py input.hepmc output.hepmc
 
 ## Simulation and Reconstruction with CLD FullSim
 
-Then, move to where (on lxplus) you want to run the scripts and get the CLDConfig repo:
-```
-git clone https://github.com/key4hep/CLDConfig.git
-```
-
 The simulation can be launch from the script:
 ```
-python ProdSim4Physics.pyy -Nevts_tot="50000" -Nevts_per_job="1000" \
+python ProdSim4Physics.py -Nevts_tot="50000" -Nevts_per_job="1000" \
         -Sample="HNL_Majorana_eenu_50GeV_1p41e-6Ve" \
-        -output_sclio="Output/HNL/" \
-        -inputFiles="HNL_Majorana_eenu_90GeV_1p41e-6Ve.hepmc"
+        -inputFiles="HNL_Majorana_eenu_50GeV_1p41e-6Ve.hepmc" \
+        -output_sim="/eos/user/g/gasadows/Output/HNL/SIM"
 ```
 ```Nevts_tot``` is the total number of events, ```Nevts_per_job``` is the number of events per job. The number of jobs is determined automatically from ```Nevts_tot``` and ```Nevts_per_job```. ```Sample``` is the sample name, note that it should match the last part of the inputFiles path.
 
 Once the simulation is produced, the reconstruction is done with the script, notes that ```Nevts_tot```, ```Nevts_per_job``` and ```Sample``` **should be the same as for the simulation**
 ```
 python ProdRec4Physics.py -Nevts_tot="50000" -Nevts_per_job="1000" \
+        -Nevts_tot="50000" -Nevts_per_job="1000" \
         -Sample="HNL_Majorana_eenu_50GeV_1p41e-6Ve" \
-        -output_edm4hep="/eos/user/g/gasadows/Output/HNL/REC" \
-        -inputFiles="/eos/user/g/gasadows/Output/HNL/"
+        -output_rec="/eos/user/g/gasadows/Output/HNL/REC" \
+        -inputFiles="/eos/experiment/fcc/ee/analyses_storage/BSM/HNL_ee/"
 ```
 
-Sometimes events or outputs are missing, to check that all events have been simulated and reconstructed run the following checks:
-```
-python checkSim_HNL.py outputSim_edm4hep.root expected_n_files expected_n_evts
-```
-```
-python checkRec_HNL.py outputSim_edm4hep.root expected_n_files expected_n_evts
-```
-If some events are missing run again the simulation/reconstruction processes, it will run only the proceses with missing events.
+Sometimes events or outputs are missing, to check that all events have been simulated and reconstructed run again the simulation/reconstruction processes, it will run only the proceses with missing events.
