@@ -36,7 +36,6 @@ python ProdSim4Physics.py -Nevts_tot="50000" -Nevts_per_job="1000" \
 Once the simulation is produced, the reconstruction is done with the script, notes that ```Nevts_tot```, ```Nevts_per_job``` and ```Sample``` **should be the same as for the simulation**
 ```
 python ProdRec4Physics.py -Nevts_tot="50000" -Nevts_per_job="1000" \
-        -Nevts_tot="50000" -Nevts_per_job="1000" \
         -Sample="HNL_Majorana_eenu_50GeV_1p41e-6Ve" \
         -output_rec="/eos/user/g/gasadows/Output/HNL/REC" \
         -inputFiles="/eos/experiment/fcc/ee/analyses_storage/BSM/HNL_ee/"
