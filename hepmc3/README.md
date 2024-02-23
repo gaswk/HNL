@@ -1,6 +1,4 @@
-# HepMC3
-
-## HepMC3
+## Generate HepMC3 with standalone pythia
 
 ### Installation
 
